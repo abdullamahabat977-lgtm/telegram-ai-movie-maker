@@ -240,7 +240,7 @@
     const button = $("export-btn");
     button.disabled = true;
     $("export-status").textContent = "فلم ثبتېږي؛ مهرباني وکړه دا پاڼه مه بندوه...";
-    const stream = canvas.captureStream(24);
+    playing = true;\n    const stream = canvas.captureStream(24);
     let audioContext, audioElement, audioUrl;
     try {
       if (musicFile) {
@@ -289,7 +289,7 @@
     } catch (error) {
       $("export-status").textContent = "ستونزه: " + error.message;
     } finally {
-      if (audioElement) { audioElement.pause(); audioElement.src = ""; }
+      playing = false;\n      scenes.forEach((scene) => { if (scene.type === "video") scene.element.pause(); });\n      if (audioElement) { audioElement.pause(); audioElement.src = ""; }
       if (audioUrl) URL.revokeObjectURL(audioUrl);
       if (audioContext) await audioContext.close().catch(() => {});
       stream.getTracks().forEach((track) => track.stop());

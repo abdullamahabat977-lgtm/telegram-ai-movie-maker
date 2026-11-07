@@ -1,0 +1,11 @@
+name = "telegram-ai-movie-maker"
+main = "worker/index.js"
+compatibility_date = "2026-11-07"
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+
+[observability]
+enabled = true

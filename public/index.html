@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ps" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#10131d">
+  <meta name="description" content="د AI په مرسته خپل فلم او ویډیو طرحه کړئ.">
+  <title>AI Movie Maker</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script defer src="/app.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">✦</div>
+        <div><strong>AI فلم جوړوونکی</strong><span>ستاسو د کیسې سټوډیو</span></div>
+      </div>
+      <div class="user-chip" id="user-chip">میلمه</div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="eyebrow"><span class="live-dot"></span> AI CREATIVE STUDIO</div>
+        <h1>خپله کیسه<br><em>ژوندۍ کړئ.</em></h1>
+        <p>کرکټرونه، صحنې او د کامرې حرکتونه طرحه کړئ؛ خپل فلم د AI ویډیو خدمت ته ولېږئ.</p>
+        <div class="hero-tags"><span>✦ سینمایي بڼه</span><span>◫ څو صحنې</span><span>♫ غږ او موسیقي</span></div>
+      </section>
+
+      <section class="panel">
+        <div class="section-heading"><div><span class="step">01</span><h2>د فلم مفکوره</h2></div><span class="hint">اصلي کیسه ولیکئ</span></div>
+        <label class="field-label" for="prompt">ستاسو د فلم کیسه</label>
+        <textarea id="prompt" maxlength="4000" rows="4" placeholder="مثلاً: یو زړور ځوان په راتلونکي کابل کې د ورکې شوې ټکنالوژۍ په لټه کې دی..."></textarea>
+        <div class="field-foot"><span>روښانه او تفصیلي کیسه غوره پایله ورکوي.</span><span id="char-count">0 / 4000</span></div>
+      </section>
+
+      <section class="panel">
+        <div class="section-heading"><div><span class="step">02</span><h2>د فلم تنظیمات</h2></div></div>
+        <div class="form-grid">
+          <div><label class="field-label" for="style">د فلم بڼه</label>
+            <select id="style"><option value="cinematic">سینمایي</option><option value="animation">انیمېشن</option><option value="realistic">واقعي</option><option value="anime">انیمه</option><option value="documentary">مستند</option><option value="fantasy">خیالي</option></select>
+          </div>
+          <div><label class="field-label" for="duration">موده</label>
+            <select id="duration"><option value="5">۵ ثانیې</option><option value="10" selected>۱۰ ثانیې</option><option value="15">۱۵ ثانیې</option><option value="30">۳۰ ثانیې</option><option value="60">۶۰ ثانیې</option></select>
+          </div>
+          <div class="wide"><label class="field-label" for="ratio">د ویډیو اندازه</label>
+            <select id="ratio"><option value="16:9">16:9 — یوټیوب / افقي</option><option value="9:16">9:16 — موبایل / عمودي</option><option value="1:1">1:1 — مربع</option></select>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-heading"><div><span class="step">03</span><h2>د صحنو طرحه</h2></div><button class="text-button" id="add-scene" type="button">＋ صحنه زیاتول</button></div>
+        <div id="scenes" class="scenes"></div>
+        <p class="hint scene-hint">هره صحنه د فلم یوه برخه ده. د صحنې ځای، عمل او د کامرې حرکت ولیکئ.</p>
+      </section>
+
+      <section class="generate-card">
+        <div class="generate-icon">✧</div>
+        <div><h2>د فلم جوړولو ته چمتو یاست؟</h2><p id="provider-note">لومړی مفکوره ولیکئ. د اصلي ویډیو جوړولو لپاره به د AI Provider اتصال ته اړتیا وي.</p></div>
+        <button id="generate" type="button"><span>✦</span> فلم جوړول</button>
+        <div id="status" class="status" role="status" aria-live="polite"></div>
+      </section>
+    </main>
+    <footer>AI Movie Maker <span>•</span> د خلاقیت لپاره جوړ شوی</footer>
+  </div>
+</body>
+</html>

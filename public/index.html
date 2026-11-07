@@ -4,66 +4,73 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#10131d">
-  <meta name="description" content="د AI په مرسته خپل فلم او ویډیو طرحه کړئ.">
-  <title>AI Movie Maker</title>
+  <meta name="description" content="خپل فلم په خپل لاس جوړ او ایډیټ کړئ.">
+  <title>Manual Movie Studio</title>
   <link rel="stylesheet" href="/styles.css">
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <script defer src="/app.js"></script>
 </head>
 <body>
-  <div class="app-shell">
-    <header class="topbar">
-      <div class="brand">
-        <div class="brand-mark">✦</div>
-        <div><strong>AI فلم جوړوونکی</strong><span>ستاسو د کیسې سټوډیو</span></div>
+<div class="app-shell">
+  <header class="topbar">
+    <div class="brand"><div class="brand-mark">🎬</div><div><strong>د فلم جوړولو سټوډیو</strong><span>خپل فلم په خپل لاس جوړ کړئ</span></div></div>
+    <div class="user-chip" id="user-chip">میلمه</div>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="eyebrow"><span class="live-dot"></span> MANUAL MOVIE STUDIO</div>
+      <h1>فلم ستا په لاس،<br><em>ستا د خوښې مطابق.</em></h1>
+      <p>انځورونه او ویډیوګانې پورته کړه، صحنې ترتیب کړه، لیکنې او موسیقي ورزیاته کړه او خپل فلم صادر کړه. دلته AI فلم نه جوړوي؛ ټول ایډیټ ته پخپله کوې.</p>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading"><div><span class="step">01</span><h2>خپل مواد ورزیات کړه</h2></div></div>
+      <div class="upload-grid">
+        <label class="upload-button">＋ انځورونه / ویډیوګانې<input id="media-input" type="file" accept="image/*,video/*" multiple></label>
+        <label class="upload-button secondary">♫ موسیقي / غږ<input id="audio-input" type="file" accept="audio/*"></label>
       </div>
-      <div class="user-chip" id="user-chip">میلمه</div>
-    </header>
+      <p class="hint">فایلونه ستا په موبایل یا کمپیوټر کې پاتې کېږي؛ د AI خدمت ته نه پورته کېږي.</p>
+    </section>
 
-    <main>
-      <section class="hero">
-        <div class="eyebrow"><span class="live-dot"></span> AI CREATIVE STUDIO</div>
-        <h1>خپله کیسه<br><em>ژوندۍ کړئ.</em></h1>
-        <p>کرکټرونه، صحنې او د کامرې حرکتونه طرحه کړئ؛ خپل فلم د AI ویډیو خدمت ته ولېږئ.</p>
-        <div class="hero-tags"><span>✦ سینمایي بڼه</span><span>◫ څو صحنې</span><span>♫ غږ او موسیقي</span></div>
-      </section>
+    <section class="panel">
+      <div class="section-heading"><div><span class="step">02</span><h2>د فلم مخکتنه</h2></div><span class="hint" id="project-time">۰ ثانیې</span></div>
+      <div class="preview-wrap"><canvas id="preview" width="1280" height="720"></canvas><div id="empty-preview">لومړی انځور یا ویډیو ورزیاته کړه</div></div>
+      <div class="preview-controls">
+        <button id="play-btn" class="control-btn" type="button">▶ چلول</button>
+        <button id="stop-btn" class="control-btn secondary-btn" type="button">■ تمول</button>
+        <span id="preview-clock">00:00</span>
+      </div>
+    </section>
 
-      <section class="panel">
-        <div class="section-heading"><div><span class="step">01</span><h2>د فلم مفکوره</h2></div><span class="hint">اصلي کیسه ولیکئ</span></div>
-        <label class="field-label" for="prompt">ستاسو د فلم کیسه</label>
-        <textarea id="prompt" maxlength="4000" rows="4" placeholder="مثلاً: یو زړور ځوان په راتلونکي کابل کې د ورکې شوې ټکنالوژۍ په لټه کې دی..."></textarea>
-        <div class="field-foot"><span>روښانه او تفصیلي کیسه غوره پایله ورکوي.</span><span id="char-count">0 / 4000</span></div>
-      </section>
+    <section class="panel">
+      <div class="section-heading"><div><span class="step">03</span><h2>د صحنو ټایم‌لاین</h2></div><span class="hint">د ترتیب بدلولو لپاره پورته / ښکته</span></div>
+      <div id="timeline" class="timeline"><div class="empty-state">تر اوسه صحنه نشته.</div></div>
+    </section>
 
-      <section class="panel">
-        <div class="section-heading"><div><span class="step">02</span><h2>د فلم تنظیمات</h2></div></div>
+    <section class="panel">
+      <div class="section-heading"><div><span class="step">04</span><h2>د ټاکلې صحنې سمون</h2></div></div>
+      <div id="editor-empty" class="empty-state">د ټایم‌لاین یوه صحنه وټاکه.</div>
+      <div id="scene-editor" hidden>
+        <label class="field-label" for="scene-title">پر پرده لیکنه</label>
+        <input id="scene-title" class="text-input" maxlength="100" placeholder="د صحنې سرلیک یا ډیالوګ">
         <div class="form-grid">
-          <div><label class="field-label" for="style">د فلم بڼه</label>
-            <select id="style"><option value="cinematic">سینمایي</option><option value="animation">انیمېشن</option><option value="realistic">واقعي</option><option value="anime">انیمه</option><option value="documentary">مستند</option><option value="fantasy">خیالي</option></select>
-          </div>
-          <div><label class="field-label" for="duration">موده</label>
-            <select id="duration"><option value="5">۵ ثانیې</option><option value="10" selected>۱۰ ثانیې</option><option value="15">۱۵ ثانیې</option><option value="30">۳۰ ثانیې</option><option value="60">۶۰ ثانیې</option></select>
-          </div>
-          <div class="wide"><label class="field-label" for="ratio">د ویډیو اندازه</label>
-            <select id="ratio"><option value="16:9">16:9 — یوټیوب / افقي</option><option value="9:16">9:16 — موبایل / عمودي</option><option value="1:1">1:1 — مربع</option></select>
-          </div>
+          <div><label class="field-label" for="scene-duration">د صحنې موده (ثانیې)</label><input id="scene-duration" class="text-input" type="number" min="1" max="60" value="5"></div>
+          <div><label class="field-label" for="scene-fit">د انځور برابرول</label><select id="scene-fit"><option value="cover">ټوله پرده ډکول</option><option value="contain">بشپړ انځور ښکاره کول</option></select></div>
         </div>
-      </section>
+        <div class="editor-actions"><button id="apply-scene" class="control-btn" type="button">سمون ثبتول</button><button id="delete-scene" class="control-btn danger-btn" type="button">صحنه ړنګول</button></div>
+      </div>
+    </section>
 
-      <section class="panel">
-        <div class="section-heading"><div><span class="step">03</span><h2>د صحنو طرحه</h2></div><button class="text-button" id="add-scene" type="button">＋ صحنه زیاتول</button></div>
-        <div id="scenes" class="scenes"></div>
-        <p class="hint scene-hint">هره صحنه د فلم یوه برخه ده. د صحنې ځای، عمل او د کامرې حرکت ولیکئ.</p>
-      </section>
-
-      <section class="generate-card">
-        <div class="generate-icon">✧</div>
-        <div><h2>د فلم جوړولو ته چمتو یاست؟</h2><p id="provider-note">لومړی مفکوره ولیکئ. د اصلي ویډیو جوړولو لپاره به د AI Provider اتصال ته اړتیا وي.</p></div>
-        <button id="generate" type="button"><span>✦</span> فلم جوړول</button>
-        <div id="status" class="status" role="status" aria-live="polite"></div>
-      </section>
-    </main>
-    <footer>AI Movie Maker <span>•</span> د خلاقیت لپاره جوړ شوی</footer>
-  </div>
+    <section class="panel">
+      <div class="section-heading"><div><span class="step">05</span><h2>د فلم صادرول</h2></div></div>
+      <label class="field-label" for="output-ratio">د فلم اندازه</label>
+      <select id="output-ratio"><option value="16:9">16:9 — افقي</option><option value="9:16">9:16 — عمودي</option><option value="1:1">1:1 — مربع</option></select>
+      <button id="export-btn" class="export-btn" type="button">⬇ خپل فلم صادر کړه</button>
+      <div id="export-status" class="status" role="status" aria-live="polite"></div>
+      <p class="hint">صادرول د موبایل د حافظې او براوزر په وړتیا پورې اړه لري. لومړی د لنډ فلم ازموینه وکړه.</p>
+    </section>
+  </main>
+  <footer>Manual Movie Studio <span>•</span> بې له AI فلم جوړول</footer>
+</div>
 </body>
 </html>
